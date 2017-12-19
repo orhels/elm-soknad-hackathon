@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Html exposing (Html, text, div, h1, img)
-import Html.Attributes exposing (src)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 
 ---- MODEL ----
@@ -35,9 +35,21 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ img [ src "/logo.svg" ] []
-        , h1 [] [ text "Your Elm App is working!" ]
+    div [ class "skjemaelement" ]
+        [ label [ class "skjemaelement__label", for "land" ]
+            [ text "Hvilken land er best om sommeren?" ]
+        , div [ class "selectContainer input--fullbredde" ]
+            [ select [ class "skjemaelement__input", id "land" ]
+                [ option [ value "norge" ]
+                    [ text "Norge" ]
+                , option [ value "sverige" ]
+                    [ text "Sverige" ]
+                , option [ value "danmark" ]
+                    [ text "Danmark" ]
+                ]
+            ]
+        , div [ attribute "aria-live" "assertive", attribute "role" "alert" ]
+            []
         ]
 
 
