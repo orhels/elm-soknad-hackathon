@@ -1,4 +1,6 @@
 node_modules
 elm-stuff
 public/*.css*
+.idea/
+*.iml
 
