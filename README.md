@@ -1,13 +1,9 @@
-# Scripts
+# elm-soknad-hackaton
 
-## mock_backend.js
+## Start mock backend
 
 Enkelt node express server som brukes under utvikling for å simulere backend tjenestene.
 
-
 ```
-  $ node mock_backend.js
+  $ npm start
 ```
-
-Ledetekster vil for eksempel være tilgjengelig på http://localhost:3001/api/tekster
-
