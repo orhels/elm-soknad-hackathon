@@ -4,6 +4,8 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import DateTimePicker exposing (..)
+import DateTimePicker.Config exposing (..)
+import DateTimePicker.SharedStyles exposing (..)
 import Date exposing (..)
 
 
@@ -59,6 +61,16 @@ update msg model =
 ---- VIEW ----
 
 
+customConfig =
+    let
+        default =
+            DateTimePicker.Config.defaultDatePickerConfig FromDateChange
+    in
+        { default
+            | firstDayOfWeek = Date.Mon
+        }
+
+
 view : Model -> Html Msg
 view model =
     div [ class "skjemaelement" ]
@@ -83,9 +95,9 @@ view model =
         , div []
             [ label [ class "skjemaelement__label", for "fom" ]
                 [ text "Oppholdet varer fra og med dato: " ]
-            , DateTimePicker.datePicker
-                FromDateChange
-                [ class "my-datetimepicker" ]
+            , DateTimePicker.datePickerWithConfig
+                customConfig
+                [ class "my-datepicker" ]
                 model.fromDatePickerState
                 model.fromSelectedDate
             , label [ class "skjemaelement__label", for "tom" ]
