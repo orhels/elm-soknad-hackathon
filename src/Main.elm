@@ -11,13 +11,20 @@ import Date exposing (..)
 
 
 type alias Model =
-    { datePickerState : DateTimePicker.State, selectedDate : Maybe Date }
+    { fromDatePickerState : DateTimePicker.State, fromSelectedDate : Maybe Date, toDatePickerState : DateTimePicker.State, toSelectedDate : Maybe Date }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { datePickerState = DateTimePicker.initialState, selectedDate = Maybe.Nothing }
-    , DateTimePicker.initialCmd DateChange DateTimePicker.initialState
+    ( { fromDatePickerState = DateTimePicker.initialState
+      , fromSelectedDate = Maybe.Nothing
+      , toDatePickerState = DateTimePicker.initialState
+      , toSelectedDate = Maybe.Nothing
+      }
+    , Cmd.batch
+        [ DateTimePicker.initialCmd FromDateChange DateTimePicker.initialState
+        , DateTimePicker.initialCmd ToDateChange DateTimePicker.initialState
+        ]
     )
 
 
@@ -31,7 +38,8 @@ type Land
 
 type Msg
     = VelgLand String
-    | DateChange DateTimePicker.State (Maybe Date)
+    | FromDateChange DateTimePicker.State (Maybe Date)
+    | ToDateChange DateTimePicker.State (Maybe Date)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -40,8 +48,11 @@ update msg model =
         VelgLand land ->
             ( model, Cmd.none )
 
-        DateChange datePickerState selectedDate ->
-            ( { model | selectedDate = selectedDate, datePickerState = datePickerState }, Cmd.none )
+        FromDateChange fromDatePickerState fromSelectedDate ->
+            ( { model | fromSelectedDate = fromSelectedDate, fromDatePickerState = fromDatePickerState }, Cmd.none )
+
+        ToDateChange toDatePickerState toSelectedDate ->
+            ( { model | toSelectedDate = toSelectedDate, toDatePickerState = toDatePickerState }, Cmd.none )
 
 
 
@@ -73,17 +84,17 @@ view model =
             [ label [ class "skjemaelement__label", for "fom" ]
                 [ text "Oppholdet varer fra og med dato: " ]
             , DateTimePicker.datePicker
-                DateChange
+                FromDateChange
                 [ class "my-datetimepicker" ]
-                model.datePickerState
-                model.selectedDate
+                model.fromDatePickerState
+                model.fromSelectedDate
             , label [ class "skjemaelement__label", for "tom" ]
                 [ text " til og med dato: " ]
             , DateTimePicker.datePicker
-                DateChange
+                ToDateChange
                 [ class "my-datetimepicker" ]
-                model.datePickerState
-                model.selectedDate
+                model.toDatePickerState
+                model.toSelectedDate
             ]
         ]
 
