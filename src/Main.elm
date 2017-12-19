@@ -1,33 +1,58 @@
 module Main exposing (..)
 
-import SoknadModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
+import DateTimePicker exposing (..)
+import Date exposing (..)
 
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    { fromDatePickerState : DateTimePicker.State, fromSelectedDate : Maybe Date, toDatePickerState : DateTimePicker.State, toSelectedDate : Maybe Date }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { fromDatePickerState = DateTimePicker.initialState
+      , fromSelectedDate = Maybe.Nothing
+      , toDatePickerState = DateTimePicker.initialState
+      , toSelectedDate = Maybe.Nothing
+      }
+    , Cmd.batch
+        [ DateTimePicker.initialCmd FromDateChange DateTimePicker.initialState
+        , DateTimePicker.initialCmd ToDateChange DateTimePicker.initialState
+        ]
+    )
 
 
 
 ---- UPDATE ----
 
 
+type Land
+    = List String
+
+
 type Msg
-    = NoOp
+    = VelgLand String
+    | FromDateChange DateTimePicker.State (Maybe Date)
+    | ToDateChange DateTimePicker.State (Maybe Date)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        VelgLand land ->
+            ( model, Cmd.none )
+
+        FromDateChange fromDatePickerState fromSelectedDate ->
+            ( { model | fromSelectedDate = fromSelectedDate, fromDatePickerState = fromDatePickerState }, Cmd.none )
+
+        ToDateChange toDatePickerState toSelectedDate ->
+            ( { model | toSelectedDate = toSelectedDate, toDatePickerState = toDatePickerState }, Cmd.none )
 
 
 
@@ -38,9 +63,13 @@ view : Model -> Html Msg
 view model =
     div [ class "skjemaelement" ]
         [ label [ class "skjemaelement__label", for "land" ]
-            [ text "Hvilken land er best om sommeren?" ]
+            [ text "Landet jeg skal oppholde meg i: " ]
         , div [ class "selectContainer input--fullbredde" ]
-            [ select [ class "skjemaelement__input", id "land" ]
+            [ select
+                [ class "skjemaelement__input"
+                , id "land"
+                , onInput VelgLand
+                ]
                 [ option [ value "norge" ]
                     [ text "Norge" ]
                 , option [ value "sverige" ]
@@ -51,6 +80,22 @@ view model =
             ]
         , div [ attribute "aria-live" "assertive", attribute "role" "alert" ]
             []
+        , div []
+            [ label [ class "skjemaelement__label", for "fom" ]
+                [ text "Oppholdet varer fra og med dato: " ]
+            , DateTimePicker.datePicker
+                FromDateChange
+                [ class "my-datetimepicker" ]
+                model.fromDatePickerState
+                model.fromSelectedDate
+            , label [ class "skjemaelement__label", for "tom" ]
+                [ text " til og med dato: " ]
+            , DateTimePicker.datePicker
+                ToDateChange
+                [ class "my-datetimepicker" ]
+                model.toDatePickerState
+                model.toSelectedDate
+            ]
         ]
 
 
