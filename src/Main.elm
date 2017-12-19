@@ -3,6 +3,8 @@ module Main exposing (..)
 import SoknadModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
+import DateTimePicker exposing (..)
 
 
 ---- MODEL ----
@@ -22,7 +24,7 @@ init =
 
 
 type Msg
-    = NoOp
+    = VelgLand String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -49,6 +51,15 @@ view model =
                     [ text "Danmark" ]
                 ]
             ]
+        , label [ class "skjemaelement__label", for "land" ]
+            [ text "Landet jeg skal oppholde meg i: " ]
+        , input [ placeholder "", onInput VelgLand, id "land" ] []
+        , label [ class "skjemaelement__label", for "fom" ]
+            [ text "Oppholdet varer fra og med dato " ]
+        , input [ placeholder "", onInput VelgLand, id "fom" ] []
+        , label [ class "skjemaelement__label", for "tom" ]
+            [ text " til og med dato " ]
+        , input [ placeholder "", onInput VelgLand, id "tom" ] []
         , div [ attribute "aria-live" "assertive", attribute "role" "alert" ]
             []
         ]
