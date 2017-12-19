@@ -11,12 +11,12 @@ import Date exposing (..)
 
 
 type alias Model =
-    { state : DateTimePicker.State, value : Maybe Date }
+    { datePickerState : DateTimePicker.State, selectedDate : Maybe Date }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( { state = DateTimePicker.initialState, value = Maybe.Nothing }
+    ( { datePickerState = DateTimePicker.initialState, selectedDate = Maybe.Nothing }
     , DateTimePicker.initialCmd DateChange DateTimePicker.initialState
     )
 
@@ -40,8 +40,8 @@ update msg model =
         VelgLand land ->
             ( model, Cmd.none )
 
-        DateChange state maybeDate ->
-            ( model, Cmd.none )
+        DateChange datePickerState selectedDate ->
+            ( { model | selectedDate = selectedDate, datePickerState = datePickerState }, Cmd.none )
 
 
 
@@ -52,7 +52,7 @@ view : Model -> Html Msg
 view model =
     div [ class "skjemaelement" ]
         [ label [ class "skjemaelement__label", for "land" ]
-            [ text "Hvilken land er best om sommeren?" ]
+            [ text "Landet jeg skal oppholde meg i: " ]
         , div [ class "selectContainer input--fullbredde" ]
             [ select
                 [ class "skjemaelement__input"
@@ -67,25 +67,24 @@ view model =
                     [ text "Danmark" ]
                 ]
             ]
-        , label [ class "skjemaelement__label", for "land" ]
-            [ text "Landet jeg skal oppholde meg i: " ]
-        , input [ placeholder "", onInput VelgLand, id "land" ] []
-        , label [ class "skjemaelement__label", for "fom" ]
-            [ text "Oppholdet varer fra og med dato " ]
-        , DateTimePicker.datePicker
-            DateChange
-            [ class "my-datetimepicker" ]
-            model.state
-            model.value
-        , label [ class "skjemaelement__label", for "tom" ]
-            [ text " til og med dato " ]
-        , DateTimePicker.datePicker
-            DateChange
-            [ class "my-datetimepicker" ]
-            model.state
-            model.value
         , div [ attribute "aria-live" "assertive", attribute "role" "alert" ]
             []
+        , div []
+            [ label [ class "skjemaelement__label", for "fom" ]
+                [ text "Oppholdet varer fra og med dato: " ]
+            , DateTimePicker.datePicker
+                DateChange
+                [ class "my-datetimepicker" ]
+                model.datePickerState
+                model.selectedDate
+            , label [ class "skjemaelement__label", for "tom" ]
+                [ text " til og med dato: " ]
+            , DateTimePicker.datePicker
+                DateChange
+                [ class "my-datetimepicker" ]
+                model.datePickerState
+                model.selectedDate
+            ]
         ]
 
 
