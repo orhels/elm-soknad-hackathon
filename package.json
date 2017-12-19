@@ -4,7 +4,7 @@
   "description": "## mock_backend.js",
   "main": "index.js",
   "scripts": {
-    "start": "elm-app start && start:less",
+    "start": "parallelshell \"elm-app start\" \"npm run start:less\"",
     "start:mock": "node ./scripts/mock_backend.js",
     "start:less": "autoless --source-map --intervall 100 ./src ./public"
   },
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "autoless": "^0.1.7",
-    "less": "^2.7.3"
+    "less": "^2.7.3",
+    "parallelshell": "^3.0.2"
   }
 }
