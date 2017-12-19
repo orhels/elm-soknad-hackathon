@@ -4,7 +4,9 @@
   "description": "## mock_backend.js",
   "main": "index.js",
   "scripts": {
-    "start": "node ./scripts/mock_backend.js"
+    "start": "elm-app start && start:less",
+    "start:mock": "node ./scripts/mock_backend.js",
+    "start:less": "autoless --source-map --intervall 100 ./src ./public"
   },
   "repository": {
     "type": "git",
@@ -19,6 +21,13 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "express-fileupload": "^0.3.0"
+    "express-fileupload": "^0.3.0",
+    "nav-frontend-core": "^4.0.5",
+    "nav-frontend-skjema-style": "^0.3.11",
+    "nav-frontend-typografi-style": "^1.0.7"
+  },
+  "devDependencies": {
+    "autoless": "^0.1.7",
+    "less": "^2.7.3"
   }
 }
