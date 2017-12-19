@@ -36,7 +36,7 @@ router.get("/informasjon/tekster", (req, res) => {
 });
 
 // Tilgang til søknadsskjema
-router.get("/informasjon/utslagskriterier/sosialhjelp", (req, res) => {
+router.get("/informasjon/utslagskriterier/soknadaaputlandet", (req, res) => {
 	res.json({ harTilgang: true, sperrekode: "bruker" });
 });
 
@@ -44,12 +44,6 @@ router.get("/informasjon/utslagskriterier/sosialhjelp", (req, res) => {
 const miljovariabler = utils.lesMockDataFil("miljovariabler.json");
 router.get("/informasjon/miljovariabler", (req, res) => {
 	res.json(miljovariabler);
-});
-
-// Ekstrainformasjon - økonomiske opplysninger
-const synligsoknadstruktur = utils.lesMockDataFil("synligsoknadstruktur.json");
-router.get("/soknader/1000B7FGM/synligsoknadstruktur", (req, res) => {
-	res.json(synligsoknadstruktur);
 });
 
 const brukerBehandlingId = "1000B7FGM";
@@ -67,18 +61,6 @@ router.post("/soknader", (req, res) => {
 // Hent ut søknad
 router.get("/soknader/:brukerBehandlingId?lang=nb_NO", (req, res) => {
 	console.log("sss");
-});
-
-const mockFeatures = {
-	"feature.frontend.sosialhjelp.kontonummer": "true",
-	"feature.frontend.sosialhjelp.live": "true",
-	"feature.frontend.sosialhjelp.personalia": "false",
-	"feature.frontend.visvelgbosted": "true",
-	"feature.frontend.vis.aa-register-info": "true"
-};
-router.get("/api/feature", (req, res) => {
-	console.log("bruker mockFeatures");
-	res.json(mockFeatures);
 });
 
 router.get("/soknader/:brukerBehandlingId", (req, res) => {
@@ -164,20 +146,6 @@ router.post("/fakta", (req, res) => {
 	const faktum = req.body;
 	fakta.push(faktum);
 	return res.json(utils.hentFaktum(faktum.faktumId, fakta));
-});
-
-router.post("/informasjon/actions/logg", (req, res) => {
-	console.log("Klient logget feil:");
-	if (typeof req.body === "string") {
-		console.log(req);
-	} else {
-		if (req.body && req.body.userAgent) {
-			req.body.userAgent = `${req.body.userAgent.substr(0, 10)}...`;
-		}
-		console.log(JSON.stringify(req.body, null, 4));
-	}
-	res.status(204); // 204 = "No content"
-	res.json();
 });
 
 app.use("/", router);

@@ -1,6 +1,6 @@
 {
 	"soknadId": 1,
-	"skjemaNummer": "NAV 35-18.01",
+	"skjemaNummer": "NAV 11-03.07",
 	"uuid": "2d63bab0-186e-4d28-aa46-cc99bd1e9f1d",
 	"brukerBehandlingId": "1000CPY7D",
 	"behandlingskjedeId": null,
@@ -272,9 +272,9 @@
 	"delstegStatus": "OPPRETTET",
 	"vedlegg": [],
 	"journalforendeEnhet": null,
-	"soknadPrefix": "soknadsosialhjelp",
-	"soknadUrl": "http://127.0.0.1:8189/soknadsosialhjelp/app",
-	"fortsettSoknadUrl": "http://127.0.0.1:8189/soknadsosialhjelp/app",
+	"soknadPrefix": "soknadaaputlandet",
+	"soknadUrl": "http://127.0.0.1:8189/soknadaaputlandet/app",
+	"fortsettSoknadUrl": "http://127.0.0.1:8189/soknadaaputlandet/app",
 	"stegliste": [
 		{ "url": "informasjonsside", "cmstekst": "veiledning" },
 		{ "url": "soknad", "cmstekst": "skjema" },
