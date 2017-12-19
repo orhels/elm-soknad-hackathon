@@ -1,18 +1,13 @@
-Repoet inneholder to tomme elm-apper som deler kode. `integrated/` inneholder en app som skal kjøres integrert i Gosys, `standalone/` inneholder en app som skal linkes til fra Gosys, men som skal kjøres for seg selv. `common/` inneholder kode som deles av applikasjonene.
+# Scripts
 
-# Installasjon
+## mock_backend.js
 
-1. Installer [node](https://nodejs.org/en/)
-2. Installer `create-elm-app`, på følgende måte:
+Enkelt node express server som brukes under utvikling for å simulere backend tjenestene.
 
-```
-npm install create-elm-app -g
-```
-
-# Kjøring
-
-I enten `integrated/` eller `standalone/` kjør følgende kommando:
 
 ```
-elm-app start
+  $ node mock_backend.js
 ```
+
+Ledetekster vil for eksempel være tilgjengelig på http://localhost:3001/api/tekster
+
