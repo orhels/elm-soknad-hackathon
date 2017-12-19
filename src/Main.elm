@@ -1,22 +1,24 @@
 module Main exposing (..)
 
-import SoknadModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import DateTimePicker exposing (..)
+import Date exposing (..)
 
 
 ---- MODEL ----
 
 
 type alias Model =
-    {}
+    { state : DateTimePicker.State, value : Maybe Date }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( {}, Cmd.none )
+    ( { state = DateTimePicker.initialState, value = Maybe.Nothing }
+    , DateTimePicker.initialCmd DateChange DateTimePicker.initialState
+    )
 
 
 
@@ -29,12 +31,16 @@ type Land
 
 type Msg
     = VelgLand String
+    | DateChange DateTimePicker.State (Maybe Date)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         VelgLand land ->
+            ( model, Cmd.none )
+
+        DateChange state maybeDate ->
             ( model, Cmd.none )
 
 
@@ -66,10 +72,18 @@ view model =
         , input [ placeholder "", onInput VelgLand, id "land" ] []
         , label [ class "skjemaelement__label", for "fom" ]
             [ text "Oppholdet varer fra og med dato " ]
-        , input [ placeholder "", onInput VelgLand, id "fom" ] []
+        , DateTimePicker.datePicker
+            DateChange
+            [ class "my-datetimepicker" ]
+            model.state
+            model.value
         , label [ class "skjemaelement__label", for "tom" ]
             [ text " til og med dato " ]
-        , input [ placeholder "", onInput VelgLand, id "tom" ] []
+        , DateTimePicker.datePicker
+            DateChange
+            [ class "my-datetimepicker" ]
+            model.state
+            model.value
         , div [ attribute "aria-live" "assertive", attribute "role" "alert" ]
             []
         ]
