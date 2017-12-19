@@ -1,5 +1,7 @@
 module SoknadModel exposing (..)
 
+import Dict exposing (Dict)
+
 
 type FaktumType
     = BRUKERREGISTRERT
@@ -18,20 +20,13 @@ type DelstegStatus
     | SAMTYKKET
 
 
-type alias Property =
-    { key : String
-    , value : Maybe String
-    }
-
-
 type alias Faktum =
     { faktumId : Int
     , soknadId : Int
     , key : String
     , value : Maybe String
     , faktumType : FaktumType
-    , faktumEgenskaper : List ()
-    , properties : List Property
+    , properties : Dict String (Maybe String)
     }
 
 
