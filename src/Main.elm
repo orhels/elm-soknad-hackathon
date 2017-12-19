@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import SoknadModel exposing (..)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
