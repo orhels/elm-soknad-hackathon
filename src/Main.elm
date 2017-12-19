@@ -23,13 +23,19 @@ init =
 ---- UPDATE ----
 
 
+type Land
+    = List String
+
+
 type Msg
     = VelgLand String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    ( model, Cmd.none )
+    case msg of
+        VelgLand land ->
+            ( model, Cmd.none )
 
 
 
@@ -42,7 +48,11 @@ view model =
         [ label [ class "skjemaelement__label", for "land" ]
             [ text "Hvilken land er best om sommeren?" ]
         , div [ class "selectContainer input--fullbredde" ]
-            [ select [ class "skjemaelement__input", id "land" ]
+            [ select
+                [ class "skjemaelement__input"
+                , id "land"
+                , onInput VelgLand
+                ]
                 [ option [ value "norge" ]
                     [ text "Norge" ]
                 , option [ value "sverige" ]
